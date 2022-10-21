@@ -1,2 +1,9 @@
-- name: restart im
-  service: name=im state=restarted
+- name: Restart sshd
+  service:
+    name: sshd
+    state: restarted
+
+- name: Restart motley-cue
+  service:
+    name: motley-cue
+    state: restarted
