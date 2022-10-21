@@ -4,59 +4,16 @@ dependency:
 driver:
   name: docker
 platforms:
-
-  - name: ubuntu-1804-canonical
-    image: geerlingguy/docker-ubuntu1804-ansible
+  - name: instance
+    #image: "geerlingguy/docker-${MOLECULE_DISTRO:-centos7}-ansible:latest"
+    image: "${MOLECULE_DISTRO}"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
+    privileged: false
     pre_build_image: true
-    privileged: true
-
-  - name: ubuntu-1804-cuda
-    image: geerlingguy/docker-ubuntu1804-ansible
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
-    pre_build_image: true
-    privileged: true
-
-  - name: ubuntu-2004-canonical
-    image: geerlingguy/docker-ubuntu2004-ansible
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
-    pre_build_image: true
-    privileged: true
-
-  - name: ubuntu-2004-cuda
-    image: geerlingguy/docker-ubuntu2004-ansible
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
-    pre_build_image: true
-    privileged: true
-
-  - name: centos-7
-    image: geerlingguy/docker-centos7-ansible
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-    command: /sbin/init
-    pre_build_image: true
-    privileged: true
-
-#  - name: centos-8
-#    image: geerlingguy/docker-centos8-ansible
-#    volumes:
-#      - /sys/fs/cgroup:/sys/fs/cgroup:ro
-#    command: /sbin/init
-#    pre_build_image: true
-#    privileged: true
 
 provisioner:
   name: ansible
-  ansible_args:
-  - -vv
-
 verifier:
   name: ansible
