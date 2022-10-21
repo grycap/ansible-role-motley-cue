@@ -1,0 +1,2 @@
+ssh_oidc_my_vo: false
+ssh_oidc_other_vos: ''

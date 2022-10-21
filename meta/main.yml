@@ -1,0 +1,21 @@
+galaxy_info:
+  role_name: motley-cue
+  author: micafer1@upv.es
+  description: Install Motley-cue
+  company: GRyCAP
+  license: Apache
+  min_ansible_version: 2.2
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+  - name: Ubuntu
+    versions:
+    - bionic
+    - focal
+  - name: Debian
+    versions:
+    - 9
+    - 10
+    - 11
