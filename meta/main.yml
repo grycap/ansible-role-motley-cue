@@ -1,6 +1,6 @@
 galaxy_info:
   namespace: grycap
-  role_name: motley-cue
+  role_name: motley_cue
   author: micafer1@upv.es
   description: Install Motley-cue
   company: GRyCAP
