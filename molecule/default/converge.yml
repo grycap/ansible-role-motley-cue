@@ -11,6 +11,9 @@
 
     - setup: 
 
+    - package:
+        name: openssh-server
+
     - name: "Include grycap.motley-cue"
       include_role:
         name: "ansible-role-motley-cue"
