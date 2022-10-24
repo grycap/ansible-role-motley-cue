@@ -1,6 +1,15 @@
 - set_fact:  
     command_env: {}
 
+- name: Install requisites
+  apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+  when: ansible_distribution == "Ubuntu"
+
 - name: Add apt KIT repository key ubuntu
   apt_key:
     url: https://repo.data.kit.edu/repo-data-kit-edu-key.gpg
