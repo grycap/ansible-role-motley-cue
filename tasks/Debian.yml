@@ -1,0 +1,10 @@
+
+- name: Add apt KIT repository key debian
+  get_url:
+    url: https://repo.data.kit.edu/repo-data-kit-edu-key.gpg
+    dest: /etc/apt/trusted.gpg.d/kitrepo-archive.asc
+
+- name: Add apt KIT repository debian
+  apt_repository:
+    repo: deb [signed-by=/etc/apt/trusted.gpg.d/kitrepo-archive.asc] https://repo.data.kit.edu/debian/{{ansible_distribution_version}} ./
+    state: present
