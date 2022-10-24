@@ -20,7 +20,8 @@ jobs:
           - centos8
           - centos7
           - ubuntu2004
-          - ubuntu1804
+          - ubuntu2204
+          - debia11
 
     steps:
       - name: Check out the codebase.
