@@ -18,6 +18,6 @@ galaxy_info:
     - jammy
   - name: Debian
     versions:
-    - 9
-    - 10
-    - 11
+    - stretch
+    - buster
+    - bullseye
