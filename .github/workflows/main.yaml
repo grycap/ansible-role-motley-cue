@@ -20,7 +20,7 @@ jobs:
           - centos8
           - centos7
           - ubuntu2004
-          - ubuntu2204
+#          - ubuntu2204
           - debian11
 
     steps:

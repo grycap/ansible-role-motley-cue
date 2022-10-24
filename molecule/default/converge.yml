@@ -16,6 +16,10 @@
       when: ansible_os_family == "Debian"
 
     - package:
+        name: python3
+      when: ansible_os_family == "RedHat"
+
+    - package:
         name: openssh-server
 
     - name: "Include grycap.motley-cue"

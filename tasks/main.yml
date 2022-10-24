@@ -11,6 +11,10 @@
       - pam-ssh-oidc
       - pam-ssh-oidc-autoconfig
 
+- name: Link python
+  raw: ls /usr/bin/python || { ls /usr/bin/python3 && ln -s /usr/bin/python3 /usr/bin/python; }
+  changed_when: false
+
 - name: Install oidc-agent-cli
   package:
     name: oidc-agent-cli
