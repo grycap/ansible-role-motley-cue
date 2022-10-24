@@ -1,5 +1,6 @@
 galaxy_info:
-  role_name: motley-cue
+  namespace: grycap
+  role_name: motley_cue
   author: micafer1@upv.es
   description: Install Motley-cue
   company: GRyCAP
@@ -8,12 +9,13 @@ galaxy_info:
   platforms:
   - name: EL
     versions:
-    - 6
     - 7
+    - 8
   - name: Ubuntu
     versions:
     - bionic
     - focal
+    - jammy
   - name: Debian
     versions:
     - 9

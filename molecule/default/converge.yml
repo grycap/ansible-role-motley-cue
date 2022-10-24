@@ -1,7 +1,38 @@
 ---
 - name: Converge
   hosts: all
+  gather_facts: false
+  vars: 
+    ansible_python_interpreter: /usr/bin/python
   tasks:
-    - name: "Include ansible-role-motley-cue"
+    - name: Link python
+      raw: ls /usr/bin/python || { ls /usr/bin/python2 && ln -s /usr/bin/python2 /usr/bin/python; } || { ls /usr/bin/python3 && ln -s /usr/bin/python3 /usr/bin/python; }
+      changed_when: false
+
+    - setup: 
+
+    - name: Ubuntu/Debian apt update
+      apt: update_cache=yes
+      when: ansible_os_family == "Debian"
+
+    - package:
+        name: python3
+      when: ansible_os_family == "RedHat"
+
+    - package:
+        name: openssh-server
+
+    - name: "Include grycap.motley-cue"
       include_role:
         name: "ansible-role-motley-cue"
+
+
+#    - slurp: src=/etc/docker/daemon.json
+#      register: slurpfile
+#      when: ansible_os_family == "Debian" and lookup('env','CONTAINERD') == "0"
+
+#    - assert:
+#        that:
+#          - "'nvidia-container-runtime' in slurpfile['content'] | b64decode"
+#      when: ansible_os_family == "Debian" and lookup('env','CONTAINERD') == "0"
+

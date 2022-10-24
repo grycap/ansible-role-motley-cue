@@ -1,71 +1,8 @@
 - set_fact:  
     command_env: {}
 
-- name: Add apt KIT repository key ubuntu
-  apt_key:
-    url: https://repo.data.kit.edu/repo-data-kit-edu-key.gpg
-    state: present
-  when: ansible_distribution == "Ubuntu"
-
-- name: Add apt KIT repository key debian
-  get_url:
-    url: https://repo.data.kit.edu/repo-data-kit-edu-key.gpg
-    dest: /etc/apt/trusted.gpg.d/kitrepo-archive.asc
-  when: ansible_distribution == "Debian"
-
-- name: Add apt KIT repository ubuntu
-  apt_repository:
-    repo: deb https://repo.data.kit.edu/ubuntu/{{ansible_distribution_version}} ./
-    state: present
-  when: ansible_distribution == "Ubuntu"
-
-- name: Add apt KIT repository debian
-  apt_repository:
-    repo: deb [signed-by=/etc/apt/trusted.gpg.d/kitrepo-archive.asc] https://repo.data.kit.edu/debian/{{ansible_distribution_version}} ./
-    state: present
-  when: ansible_distribution == "Debian"
-
-- name: Ensure EPEL is installed.
-  package:
-    name: epel-release
-    state: present
-  when: ansible_os_family == "RedHat" and ansible_distribution != "Fedora" and ansible_distribution_major_version|int < 9
-
-- name: Add yum KIT repository CentOS
-  get_url:
-    url: https://repo.data.kit.edu/data-kit-edu-centos{{ansible_distribution_major_version}}.repo
-    dest: /etc/yum.repos.d/data-kit-edu-centos{{ansible_distribution_major_version}}.repo
-  when: ansible_distribution == "CentOS" and ansible_distribution_release != "Stream"
-
-- name: Add yum KIT repository CentOS Stream
-  get_url:
-    url: https://repo.data.kit.edu/data-kit-edu-centos-stream.repo
-    dest: /etc/yum.repos.d/data-kit-edu-centos-stream.repo
-  when: ansible_distribution == "CentOS" and ansible_distribution_release == "Stream"
-
-- name: Install pyyaml in CentOS 8
-  yum:
-    name: https://cbs.centos.org/kojifiles/packages/PyYAML/5.4.1/2.el8/x86_64/python3-pyyaml-5.4.1-2.el8.x86_64.rpm
-    disable_gpg_check: yes
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "8"
-
-- name: Install centos-release-scl in CentOS 7
-  yum:
-    name: centos-release-scl
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
-
-- name: Install python38 in CentOS 7
-  yum:
-    name: rh-python38
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
-
-- name: Enable python38 pip in CentOS 7
-  file:
-    src: /opt/rh/rh-python38/root/usr/bin/pip3
-    dest: /usr/bin/pip3
-    state: link
-    force: yes
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
+- name: Include {{ansible_distribution}} tasks
+  include_tasks: "{{ansible_distribution}}.yml"
 
 - name: Install motley-cue and pam-ssh-oidc
   package:
@@ -74,17 +11,15 @@
       - pam-ssh-oidc
       - pam-ssh-oidc-autoconfig
 
+- name: Link python
+  raw: ls /usr/bin/python || { ls /usr/bin/python3 && ln -s /usr/bin/python3 /usr/bin/python; }
+  changed_when: false
+
 - name: Install oidc-agent-cli
   package:
     name: oidc-agent-cli
   ignore_errors: true
-
-- name: Ensure Pip is installed.
-  package:
-    name: python3-pip
-    state: present
-  when: not (ansible_distribution == "CentOS" and ansible_distribution_major_version == "7")
-  
+ 
 - name: Install contextualise_ssh_server
   pip:
     name: contextualise_ssh_server
