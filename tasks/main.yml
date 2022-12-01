@@ -20,6 +20,20 @@
     name: oidc-agent-cli
   ignore_errors: true
 
+- block:
+
+  - name: Download pip installer
+    get_url:
+      url: https://bootstrap.pypa.io/get-pip.py
+      dest: /opt/get-pip.py
+
+  - name: Install pip
+    command:
+      cmd: python3.8 /opt/get-pip.py
+      creates: /usr/local/bin/pip3.8
+
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18"
+
 - name: Install PyYAML
   pip:
     name: PyYAML
@@ -62,6 +76,13 @@
   set_fact:
     command_env: "{{ command_env | combine ({ 'SSH_AUTHORISE_VOS' : ['urn:mace:egi.eu:group:{{ssh_oidc_other_vos}}:role=member#aai.egi.eu'] }) }}"
   when: ssh_oidc_other_vos != ''
+
+- name: Use python3.8 in Ubuntu 18.08
+  lineinfile:
+      path: /usr/local/bin/contextualise_ssh_server
+      regexp: '^#!/usr/bin/python3'
+      line: '#!/usr/bin/python3.8'
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18"
 
 - name: Execute contextualise_ssh_server command
   command: contextualise_ssh_server {{IM_INFRASTRUCTURE_AUTH}}
