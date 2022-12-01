@@ -21,7 +21,7 @@ jobs:
           - centos7
           - ubuntu1804
           - ubuntu2004
-#          - ubuntu2204
+          - ubuntu2204
           - debian10
           - debian11
 

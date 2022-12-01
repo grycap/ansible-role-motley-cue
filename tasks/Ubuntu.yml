@@ -1,5 +1,6 @@
 - name: Install requisites
   apt:
+    install_recommends: false
     name:
       - ca-certificates
       - curl
