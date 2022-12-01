@@ -15,6 +15,15 @@
       apt: update_cache=yes cache_valid_time=3600
       when: ansible_os_family == "Debian"
 
+    - name: Remove old pkgs
+      apt:
+        state: absent
+        name:
+        - python3-yaml
+        - python-yaml
+      ignore_errors: true
+      when: ansible_os_family == "Debian"
+
     - package:
         name: python3
       when: ansible_os_family == "RedHat"
