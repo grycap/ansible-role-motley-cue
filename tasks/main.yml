@@ -19,12 +19,18 @@
   package:
     name: oidc-agent-cli
   ignore_errors: true
- 
+
+- name: Install PyYAML
+  pip:
+    name: PyYAML
+    executable: pip3
+    extra_args: --ignore-installed
+  changed_when: false
+
 - name: Install contextualise_ssh_server
   pip:
     name: contextualise_ssh_server
     executable: pip3
-    extra_args: --ignore-installed PyYAML
 
 - name: Enable contextualise_ssh_server in CentOS 7
   file:
