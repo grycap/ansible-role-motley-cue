@@ -17,18 +17,13 @@ jobs:
     strategy:
       matrix:
         distro:
-          - image: centos8
-            command: ""
-          - image: centos7
-            command: /sbin/init
-          - image: ubuntu1804
-            command: ""
-          - image: ubuntu2004
-            command: ""
-          - image: debian10
-            command: ""
-          - image: debian11
-            command: ""
+          - centos8
+          - centos7
+          - ubuntu1804
+          - ubuntu2004
+#          - ubuntu2204
+          - debian10
+          - debian11
 
     steps:
       - name: Check out the codebase.
@@ -47,5 +42,4 @@ jobs:
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
-          MOLECULE_DISTRO: ${{ matrix.distro.image }}
-          MOLECULE_DOCKER_COMMAND: ${{ matrix.distro.command }}
+          MOLECULE_DISTRO: ${{ matrix.distro }}
