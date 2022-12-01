@@ -5,6 +5,9 @@
       - curl
       - gnupg
       - lsb-release
+      - python3
+      - python3-pip
+      - python3-setuptools
 
 - name: Add apt KIT repository key ubuntu
   apt_key:
