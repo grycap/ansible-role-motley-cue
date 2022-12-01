@@ -20,6 +20,20 @@
     name: oidc-agent-cli
   ignore_errors: true
 
+- block:
+
+  - name: Download pip installer
+    get_url:
+      url: https://bootstrap.pypa.io/get-pip.py
+      dest: /opt/get-pip.py
+
+  - name: Install pip
+    command:
+      cmd: python3.8 /opt/get-pip.py
+      creates: /usr/local/bin/pip3.8
+
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18"
+
 - name: Install PyYAML
   pip:
     name: PyYAML
