@@ -10,6 +10,14 @@
       - python3-pip
       - python3-setuptools
 
+- name: Remove old pkgs
+  apt:
+    state: absent
+    name:
+    - python3-yaml
+    - python-yaml
+  ignore_errors: true
+
 - name: Add apt KIT repository key ubuntu
   apt_key:
     url: https://repo.data.kit.edu/repo-data-kit-edu-key.gpg
