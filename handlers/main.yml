@@ -4,6 +4,4 @@
     state: restarted
 
 - name: Restart motley-cue
-  service:
-    name: motley-cue
-    state: restarted
+  import_tasks: tasks/restart_motley_cue.yaml
