@@ -1,0 +1,13 @@
+- name: Restart motley-cue
+  service:
+    name: motley-cue
+    state: restarted
+
+- name: Wait for motley-cue
+  pause:
+    seconds: 10
+
+- name: Start motley-cue
+  service:
+    name: motley-cue
+    state: started
