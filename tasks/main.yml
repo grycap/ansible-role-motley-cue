@@ -32,6 +32,10 @@
       cmd: python3.8 /opt/get-pip.py
       creates: /usr/local/bin/pip3.8
 
+  - name: Install python-setuptools
+    package:
+      name: python-setuptools
+
   when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18"
 
 - name: Install PyYAML
