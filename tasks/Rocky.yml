@@ -1,0 +1,5 @@
+- name: Add yum KIT repository Rocky
+  get_url:
+    url: https://repo.data.kit.edu//data-kit-edu-rockylinux{{ansible_distribution_major_version}}.repo
+    dest: /etc/yum.repos.d/data-kit-edu-rockylinux{{ansible_distribution_major_version}}.repo
+  when: ansible_distribution == "Rocky"

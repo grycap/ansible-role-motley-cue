@@ -17,12 +17,12 @@ jobs:
     strategy:
       matrix:
         distro:
-#          - centos8
-#          - ubuntu1804
+          - rockylinux9
           - ubuntu2004
-#          - ubuntu2204
+          - ubuntu2204
           - debian10
           - debian11
+          - debian12
 
     steps:
       - name: Check out the codebase.
