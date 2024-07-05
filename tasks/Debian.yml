@@ -6,5 +6,5 @@
 
 - name: Add apt KIT repository debian
   apt_repository:
-    repo: deb [signed-by=/etc/apt/trusted.gpg.d/kitrepo-archive.asc] https://repo.data.kit.edu/debian/{{ansible_distribution_version}} ./
+    repo: deb [signed-by=/etc/apt/trusted.gpg.d/kitrepo-archive.asc] https://repo.data.kit.edu/debian/{{ansible_distribution_major_version}} ./
     state: present
