@@ -20,23 +20,10 @@
     name: oidc-agent-cli
   ignore_errors: true
 
-- block:
-
-  - name: Download pip installer
-    get_url:
-      url: https://bootstrap.pypa.io/get-pip.py
-      dest: /opt/get-pip.py
-
-  - name: Install pip
-    command:
-      cmd: python3.8 /opt/get-pip.py
-      creates: /usr/local/bin/pip3.8
-
-  - name: Install python-setuptools
-    package:
-      name: python-setuptools
-
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18"
+# xref: https://github.com/geerlingguy/ansible-role-pip/
+- name: Install pip
+  package:
+    name: python3-pip
 
 - name: Install PyYAML
   pip:
@@ -49,13 +36,6 @@
   pip:
     name: contextualise_ssh_server
     executable: pip3
-
-- name: Enable contextualise_ssh_server in CentOS 7
-  file:
-    src: /opt/rh/rh-python38/root/usr/local/bin/contextualise_ssh_server
-    dest: /usr/bin/contextualise_ssh_server
-    state: link
-  when: ansible_distribution == "CentOS" and ansible_distribution_major_version == "7"
 
 - name: Enable OIDC in PAM
   lineinfile:
@@ -80,13 +60,6 @@
   set_fact:
     command_env: "{{ command_env | combine ({ 'SSH_AUTHORISE_VOS' : ['urn:mace:egi.eu:group:{{ssh_oidc_other_vos}}:role=member#aai.egi.eu'] }) }}"
   when: ssh_oidc_other_vos != ''
-
-- name: Use python3.8 in Ubuntu 18.08
-  lineinfile:
-      path: /usr/local/bin/contextualise_ssh_server
-      regexp: '^#!/usr/bin/python3'
-      line: '#!/usr/bin/python3.8'
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18"
 
 - name: Set access token with IM for contextualise_ssh_server
   set_fact:
