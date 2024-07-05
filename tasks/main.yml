@@ -18,7 +18,6 @@
 - name: Install oidc-agent-cli
   package:
     name: oidc-agent-cli
-  ignore_errors: true
 
 # xref: https://github.com/geerlingguy/ansible-role-pip/
 - name: Install pip
