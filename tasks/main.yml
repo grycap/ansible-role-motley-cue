@@ -88,13 +88,23 @@
       line: '#!/usr/bin/python3.8'
   when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "18"
 
+- name: Set access token with IM for contextualise_ssh_server
+  set_fact:
+    OIDC_ACCESS_TOKEN: "{{ IM_INFRASTRUCTURE_AUTH }}"
+  when: IM_INFRASTRUCTURE_AUTH is defined and IM_INFRASTRUCTURE_AUTH is not search(":")
+
+- name: Set access token as extra-var for contextualise_ssh_server
+  set_fact:
+    OIDC_ACCESS_TOKEN: "{{ ACCESS_TOKEN }}"
+  when: ACCESS_TOKEN is defined
+
 - name: Execute contextualise_ssh_server command
-  command: contextualise_ssh_server {{IM_INFRASTRUCTURE_AUTH}}
+  command: contextualise_ssh_server {{OIDC_ACCESS_TOKEN}}
   args:
     chdir: /opt/motley_cue
     creates: /opt/motley_cue/motley_cue.conf
-  when: IM_INFRASTRUCTURE_AUTH is defined and IM_INFRASTRUCTURE_AUTH is not search(":")
   register: contextualise_ssh_server
+  when: OIDC_ACCESS_TOKEN is defined
   environment: "{{command_env}}"
 
 - name: Copy conf files to /etc
