@@ -1,2 +1,9 @@
 ssh_oidc_my_vo: false
-ssh_oidc_other_vos: ''
+ssh_oidc_other_vos_namespace: urn:mace:egi.eu
+ssh_oidc_other_vos_name: ''
+ssh_oidc_other_vos_groups: ''
+#example:
+#ssh_oidc_other_vos_groups:
+#- my.group
+ssh_oidc_other_vos_role: member
+ssh_oidc_other_vos_gropu_authority: aai.egi.eu
