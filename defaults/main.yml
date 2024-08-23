@@ -6,4 +6,4 @@ ssh_oidc_other_vos_groups: ''
 #ssh_oidc_other_vos_groups:
 #- my.group
 ssh_oidc_other_vos_role: member
-ssh_oidc_other_vos_gropu_authority: aai.egi.eu
+ssh_oidc_other_vos_authority: aai.egi.eu

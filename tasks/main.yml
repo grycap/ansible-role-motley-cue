@@ -90,7 +90,7 @@
       {% if ssh_oidc_other_vos_role != '' %}
       :role={{ssh_oidc_other_vos_role}}
       {% endif %}
-      #{{ssh_oidc_other_vos_gropu_authority}}
+      #{{ssh_oidc_other_vos_authority}}
 
 - name: Clean up and show eduPersonEntitlement that will be used
   debug:
