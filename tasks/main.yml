@@ -76,30 +76,33 @@
     command_env: "{{ command_env | combine ({ 'SSH_AUTHORISE_OTHERS_IN_MY_VO' : 1 }) }}"
   when: ssh_oidc_my_vo
 
-# Refernce:
-# https://docs.egi.eu/users/aai/check-in/vos/expressing-vo-information/
-- name: set eduPersonEntitlement
-  set_fact:
-    eduPersonEntitlement: >-
-      {{ssh_oidc_other_vos_namespace}}
-      :group
-      :{{ssh_oidc_other_vos_name}}
-      {%for group in ssh_oidc_other_vos_groups %}
-      :{{group}}
-      {% endfor %}
-      {% if ssh_oidc_other_vos_role != '' %}
-      :role={{ssh_oidc_other_vos_role}}
-      {% endif %}
-      #{{ssh_oidc_other_vos_authority}}
+- block:
 
-- name: Clean up and show eduPersonEntitlement that will be used
-  debug:
-    msg: "{{ eduPersonEntitlement | replace(' ','') }}"
-  register: eduPersonEntitlement_trimmed
+  # Refernce:
+  # https://docs.egi.eu/users/aai/check-in/vos/expressing-vo-information/
+  - name: set eduPersonEntitlement
+    set_fact:
+      eduPersonEntitlement: >-
+        {{ssh_oidc_other_vos_namespace}}
+        :group
+        :{{ssh_oidc_other_vos_name}}
+        {%for group in ssh_oidc_other_vos_groups %}
+        :{{group}}
+        {% endfor %}
+        {% if ssh_oidc_other_vos_role != '' %}
+        :role={{ssh_oidc_other_vos_role}}
+        {% endif %}
+        #{{ssh_oidc_other_vos_authority}}
 
-- name: set SSH_AUTHORISE_VOS
-  set_fact:
-    command_env: "{{ command_env | combine ({ 'SSH_AUTHORISE_VOS' : ['{{ eduPersonEntitlement_trimmed.msg }}'] }) }}"
+  - name: Clean up and show eduPersonEntitlement that will be used
+    debug:
+      msg: "{{ eduPersonEntitlement | replace(' ','') }}"
+    register: eduPersonEntitlement_trimmed
+
+  - name: set SSH_AUTHORISE_VOS
+    set_fact:
+      command_env: "{{ command_env | combine ({ 'SSH_AUTHORISE_VOS' : ['{{ eduPersonEntitlement_trimmed.msg }}'] }) }}"
+
   when: ssh_oidc_other_vos_name != ''
 
 - name: Use python3.8 in Ubuntu 18.08
