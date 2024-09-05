@@ -25,6 +25,8 @@
     - name: "Include grycap.motley-cue"
       include_role:
         name: "ansible-role-motley-cue"
+      vars:
+        ssh_oidc_other_vos_name: "vo.test.eu"
 
 
 #    - slurp: src=/etc/docker/daemon.json
