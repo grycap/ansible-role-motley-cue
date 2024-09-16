@@ -94,6 +94,13 @@
     OIDC_ACCESS_TOKEN: "{{ ACCESS_TOKEN }}"
   when: ACCESS_TOKEN is defined
 
+- name: Fail if OIDC_ACCESS_TOKEN is not set
+  ansible.builtin.fail:
+    msg: An OIDC access token is required to configure motley-cue with contextualise_ssh_server
+  when: OIDC_ACCESS_TOKEN is not defined
+  tags:
+    - molecule-notest
+
 - name: Execute contextualise_ssh_server command
   command: contextualise_ssh_server {{OIDC_ACCESS_TOKEN}}
   args:
