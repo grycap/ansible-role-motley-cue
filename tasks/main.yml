@@ -4,12 +4,18 @@
 - name: Include {{ansible_distribution}} tasks
   include_tasks: "{{ansible_distribution}}.yml"
 
-- name: Install motley-cue and pam-ssh-oidc
+# Not sure if this is needed
+- name: Install pam-ssh-oidc
+  package:
+    name:
+      - pam-ssh-oidc
+      - pam-ssh-oidc-autoconfig
+  ignore_errors: yes
+
+- name: Install motley-cue
   package:
     name:
       - motley-cue
-      - pam-ssh-oidc
-      - pam-ssh-oidc-autoconfig
 
 - name: Link python
   raw: ls /usr/bin/python || { ls /usr/bin/python3 && ln -s /usr/bin/python3 /usr/bin/python; }

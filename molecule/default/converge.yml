@@ -24,7 +24,7 @@
 
     - name: "Include grycap.motley-cue"
       include_role:
-        name: "ansible-role-motley-cue"
+        name: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') }}"
       vars:
         ssh_oidc_other_vos_name: "vo.test.eu"
 
