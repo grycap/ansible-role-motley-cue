@@ -1,0 +1,5 @@
+- name: Add yum KIT repository AlmaLinux
+  get_url:
+    url: https://repo.data.kit.edu/data-kit-edu-almalinux{{ansible_distribution_major_version}}.repo
+    dest: /etc/yum.repos.d/data-kit-edu-almalinux{{ansible_distribution_major_version}}.repo
+
