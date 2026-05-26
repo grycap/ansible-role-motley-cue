@@ -28,6 +28,9 @@
       vars:
         ssh_oidc_other_vos_name: "vo.test.eu"
 
+    - name: Test contextualise_ssh_server
+      command: "contextualise_ssh_server -h"
+      changed_when: false
 
 #    - slurp: src=/etc/docker/daemon.json
 #      register: slurpfile
