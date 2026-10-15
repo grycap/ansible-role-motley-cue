@@ -8,11 +8,12 @@
       - lsb-release
 
 - name: Add apt KIT repository key ubuntu
-  apt_key:
+  get_url:
     url: https://repo.data.kit.edu/repo-data-kit-edu-key.gpg
-    state: present
+    dest: /etc/apt/keyrings/repo-data-kit-edu-key.asc
+    mode: "0644"
 
 - name: Add apt KIT repository ubuntu
   apt_repository:
-    repo: deb https://repo.data.kit.edu/ubuntu/{{ansible_distribution_version}} ./
+    repo: deb [signed-by=/etc/apt/keyrings/repo-data-kit-edu-key.asc] https://repo.data.kit.edu/ubuntu/{{ansible_distribution_version}} ./
     state: present

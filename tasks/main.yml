@@ -12,6 +12,11 @@
       - pam-ssh-oidc-autoconfig
   ignore_errors: yes
 
+- name: Install nginx-location-includer for Ubuntu 26.04 from 24.04 repo
+  apt:
+    deb: https://repo.data.kit.edu/ubuntu/24.04/nginx-location-includer_0.0.2-1_all.deb
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('26.04', '=')
+
 - name: Install motley-cue
   package:
     name:
@@ -25,22 +30,39 @@
   package:
     name: oidc-agent-cli
 
+- name: Uninstall python3-typing-extensions
+  apt:
+    name: python3-typing-extensions
+    state: absent
+  ignore_errors: yes
+  when: ansible_os_family == 'Debian'
+
 # xref: https://github.com/geerlingguy/ansible-role-pip/
 - name: Install pip
   package:
     name: python3-pip
 
+- name: Set extra_args var
+  set_fact:
+    extra_args: ""
+
+- name: Set extra_args var in py3.11
+  set_fact:
+    extra_args: --break-system-packages
+  when: ansible_python_version is version('3.11', '>=')
+
 - name: Install PyYAML
   pip:
     name: PyYAML
     executable: pip3
-    extra_args: --ignore-installed
+    extra_args: --ignore-installed {{ extra_args }}
   changed_when: false
 
 - name: Install contextualise_ssh_server
   pip:
     name: contextualise_ssh_server
     executable: pip3
+    extra_args: "{{ extra_args }}"
 
 - name: Enable OIDC in PAM
   lineinfile:
