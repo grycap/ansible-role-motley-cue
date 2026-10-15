@@ -35,17 +35,28 @@
   package:
     name: python3-pip
 
+- name: Set extra_args var
+  set_fact:
+    extra_args: ""
+
+- name: Set extra_args var in py3.11
+  set_fact:
+    extra_args: --break-system-packages
+  when: ansible_python_version is version('3.11', '>=')
+
+
 - name: Install PyYAML
   pip:
     name: PyYAML
     executable: pip3
-    extra_args: --ignore-installed
+    extra_args: --ignore-installed {{ extra_args }}
   changed_when: false
 
 - name: Install contextualise_ssh_server
   pip:
     name: contextualise_ssh_server
     executable: pip3
+    extra_args: "{{ extra_args }}"
 
 - name: Enable OIDC in PAM
   lineinfile:
