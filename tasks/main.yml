@@ -30,6 +30,13 @@
   package:
     name: oidc-agent-cli
 
+- name: Uninstall python3-typing-extensions
+  apt:
+    name: python3-typing-extensions
+    state: absent
+  ignore_errors: yes
+  when: ansible_family == 'Debian'
+
 # xref: https://github.com/geerlingguy/ansible-role-pip/
 - name: Install pip
   package:
@@ -43,7 +50,6 @@
   set_fact:
     extra_args: --break-system-packages
   when: ansible_python_version is version('3.11', '>=')
-
 
 - name: Install PyYAML
   pip:
