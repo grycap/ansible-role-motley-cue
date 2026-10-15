@@ -7,12 +7,6 @@
       - gnupg
       - lsb-release
 
-- name: Create apt keyrings directory
-  file:
-    path: /etc/apt/keyrings
-    state: directory
-    mode: "0755"
-
 - name: Add apt KIT repository key ubuntu
   get_url:
     url: https://repo.data.kit.edu/repo-data-kit-edu-key.gpg
