@@ -35,7 +35,7 @@
     name: python3-typing-extensions
     state: absent
   ignore_errors: yes
-  when: ansible_family == 'Debian'
+  when: ansible_os_family == 'Debian'
 
 # xref: https://github.com/geerlingguy/ansible-role-pip/
 - name: Install pip
