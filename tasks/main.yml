@@ -12,11 +12,6 @@
       - pam-ssh-oidc-autoconfig
   ignore_errors: yes
 
-- name: Install nginx-location-includer for Ubuntu 26.04 from 24.04 repo
-  apt:
-    deb: https://repo.data.kit.edu/ubuntu/24.04/nginx-location-includer_0.0.2-1_all.deb
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('26.04', '=')
-
 - name: Install motley-cue
   package:
     name:
